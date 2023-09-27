@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { IReplacement } from '../IReplacement';
+import { IReplacement } from '../interfaces/IReplacement';
 
 export interface KeyValue {
 	[key: string]: string;
