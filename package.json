@@ -11,9 +11,11 @@
   "author": "Adrian Garcia Estaun",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.7.0",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
-    "eslint": "^8.43.0",
-    "eslint-config-defaults": "^9.0.0"
+    "eslint": "^8.50.0",
+    "eslint-config-defaults": "^9.0.0",
+    "eslint-plugin-node": "^11.1.0"
   }
 }

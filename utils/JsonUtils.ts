@@ -1,5 +1,5 @@
-import fs from 'fs';
-import {IReplacement} from '../IReplacement';
+import * as fs from 'fs';
+import { IReplacement } from '../IReplacement';
 
 export interface KeyValue {
 	[key: string]: string;
@@ -10,17 +10,16 @@ export function replaceValues(source: KeyValue, target: KeyValue): IReplacement 
 	let notFound = 0;
 
 	for (const key in source) {
-		if (source.hasOwnProperty(key)) {
-			if (target.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(target, key)) {
 				target[key] = source[key];
 				replaced++;
 			} else {
 				console.warn(`	The key "${key}" does not exist in the target "". Ignoring...`);
 				notFound++;
 			}
-		}
 	}
-	return {totalReplaced: replaced, totalNotFound: notFound};
+
+	return { totalReplaced: replaced, totalNotFound: notFound };
 }
 
 export function replaceJsonValues(sourcePath: string, targetPath: string): void {
@@ -32,7 +31,7 @@ export function replaceJsonValues(sourcePath: string, targetPath: string): void 
 		return;
 	}
 
-	const {totalReplaced, totalNotFound} = replaceValues(sourceData, targetData);
+	const { totalReplaced, totalNotFound } = replaceValues(sourceData, targetData);
 
 	console.log(`👁️ Total replaced ${totalReplaced}. Total not found in target ${totalNotFound}.`);
 
