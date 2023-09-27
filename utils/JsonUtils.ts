@@ -1,19 +1,26 @@
-import fs from "fs";
+import fs from 'fs';
+import {IReplacement} from '../IReplacement';
 
 export interface KeyValue {
 	[key: string]: string;
 }
 
-export function replaceValues(source: KeyValue, target: KeyValue): void {
+export function replaceValues(source: KeyValue, target: KeyValue): IReplacement {
+	let replaced = 0;
+	let notFound = 0;
+
 	for (const key in source) {
 		if (source.hasOwnProperty(key)) {
 			if (target.hasOwnProperty(key)) {
 				target[key] = source[key];
+				replaced++;
 			} else {
-				console.warn(`The key "${key}" does not exist in the destiny. Ignoring...`);
+				console.warn(`	The key "${key}" does not exist in the target "". Ignoring...`);
+				notFound++;
 			}
 		}
 	}
+	return {totalReplaced: replaced, totalNotFound: notFound};
 }
 
 export function replaceJsonValues(sourcePath: string, targetPath: string): void {
@@ -25,7 +32,9 @@ export function replaceJsonValues(sourcePath: string, targetPath: string): void 
 		return;
 	}
 
-	replaceValues(sourceData, targetData);
+	const {totalReplaced, totalNotFound} = replaceValues(sourceData, targetData);
+
+	console.log(`👁️ Total replaced ${totalReplaced}. Total not found in target ${totalNotFound}.`);
 
 	fs.writeFileSync(targetPath, JSON.stringify(targetData, null, 2));
 }
